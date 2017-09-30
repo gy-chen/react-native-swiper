@@ -15,7 +15,7 @@ import {
   Platform,
   ActivityIndicator
 } from 'react-native'
-import VerticalViewPager from './react_native_vertical_view_pager';
+import VerticalViewPager from 'react-native-vertical-view-pager';
 
 /**
  * Default styles
