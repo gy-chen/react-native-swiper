@@ -8,13 +8,14 @@ import {
   Text,
   View,
   ViewPropTypes,
-  ScrollView,
   Dimensions,
+  ScrollView,
   TouchableOpacity,
   ViewPagerAndroid,
   Platform,
   ActivityIndicator
 } from 'react-native'
+import VerticalViewPager from './react_native_vertical_view_pager';
 
 /**
  * Default styles
@@ -621,6 +622,22 @@ export default class extends Component {
   }
 
   renderScrollView = pages => {
+    const { horizontal } = this.props
+    if (!horizontal) {
+      return (
+        <VerticalViewPager ref={this.refScrollView}
+          {...this.props}
+          {...this.scrollViewPropOverrides()}
+          contentContainerStyle={[styles.wrapperIOS, this.props.style]}
+          contentOffset={this.state.offset}
+          onScrollBeginDrag={this.onScrollBegin}
+          onMomentumScrollEnd={this.onScrollEnd}
+          onScrollEndDrag={this.onScrollEndDrag}
+          style={this.props.scrollViewStyle}>
+          {pages}
+        </VerticalViewPager>
+      )
+    }
     if (Platform.OS === 'ios') {
       return (
         <ScrollView ref={this.refScrollView}
