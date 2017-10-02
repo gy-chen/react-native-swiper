@@ -252,10 +252,15 @@ export default class extends Component {
       initState.height = height;
     }
 
-    initState.offset[initState.dir] = initState.dir === 'y'
-      ? height * props.index
-      : width * props.index
-
+    if (initState.total > 1) {
+      let setup = initState.index
+      if (this.props.loop) {
+        setup++
+      }
+      initState.offset[initState.dir] = initState.dir === 'y'
+        ? initState.height * setup
+        : initState.width * setup
+    }
 
     this.internals = {
       ...this.internals,
@@ -293,7 +298,7 @@ export default class extends Component {
     // related to https://github.com/leecade/react-native-swiper/issues/570
     // contentOffset is not working in react 0.48.x so we need to use scrollTo
     // to emulate offset.
-    if (Platform.OS === 'ios' || !this.props.horizontal) {
+    if (Platform.OS === 'ios') {
       if (this.initialRender && this.state.total > 1) {
         this.scrollView.scrollTo({...offset, animated: false})
         this.initialRender = false;
@@ -628,6 +633,7 @@ export default class extends Component {
           {...this.props}
           {...this.scrollViewPropOverrides()}
           contentContainerStyle={[styles.wrapperIOS]}
+          contentOffset={this.state.offset}
           onScrollBeginDrag={this.onScrollBegin}
           onMomentumScrollEnd={this.onScrollEnd}
           onScrollEndDrag={this.onScrollEndDrag}
