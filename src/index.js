@@ -254,7 +254,7 @@ export default class extends Component {
 
     if (initState.total > 1) {
       let setup = initState.index
-      if (this.props.loop) {
+      if (props.loop) {
         setup++
       }
       initState.offset[initState.dir] = initState.dir === 'y'
@@ -298,7 +298,7 @@ export default class extends Component {
     // related to https://github.com/leecade/react-native-swiper/issues/570
     // contentOffset is not working in react 0.48.x so we need to use scrollTo
     // to emulate offset.
-    if (Platform.OS === 'ios') {
+    if (Platform.OS === 'ios' || !this.props.horizontal) {
       if (this.initialRender && this.state.total > 1) {
         this.scrollView.scrollTo({...offset, animated: false})
         this.initialRender = false;
