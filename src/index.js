@@ -406,7 +406,7 @@ export default class extends Component {
 
     // Do nothing if offset no change.
     if (!diff) {
-      this.internals.offset[dir] = offset[dir]
+      this.internals.offset[dir] = {...this.internals.offset, [dir]: offset[dir]};
       return
     }
 
